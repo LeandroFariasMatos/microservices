@@ -21,8 +21,6 @@ public class TransactionDetails {
     private long orderId;
     @Column(name = "MODE")
     private String paymentMode;
-    @Column(name = "REFERENCE_NUMBER")
-    private String referenceNumber;
     @Column(name = "PAYMENT_DATE")
     private Instant paymentDate;
     @Column(name = "STATUS")
