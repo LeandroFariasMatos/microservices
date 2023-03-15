@@ -1,0 +1,26 @@
+version: '3'
+services:
+  serviceregistry:
+    image: 'leandromatoss/service-registry:latest'
+    container_name: serviceregistry
+    ports:
+      - '8761:8761'
+  configserver:
+    image: 'leandromatoss/configserver:latest'
+    container_name: configserver
+    ports:
+      - '9296:9296'
+    environment:
+      - EUREKA_SERVER_ADDRESS=http://serviceregistry:8761/eureka
+    depends_on:
+      - serviceregistry
+  cloudgateway:
+    image: 'leandromatoss/cloudgateway:latest'
+    container_name: cloudgateway
+    environment:
+      - EUREKA_SERVER_ADDRESS=http://serviceregistry:8761/eureka
+      - CONFIG_SERVER_URL=configserver
+    ports:
+      - '9090:9090'
+    depends_on:
+      - configserver
